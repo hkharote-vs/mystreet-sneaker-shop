@@ -33,7 +33,7 @@ All feature specs live here. Work through them **in order**. Each spec must be f
 | 08 | [Shopping Cart — Frontend](./08-cart-frontend.md) | FE | `[x] Complete` | SPEC-05, SPEC-07 |
 | 09 | [Checkout & Orders — Frontend](./09-checkout-frontend.md) | FE | `[x] Complete` | SPEC-05, SPEC-06, SPEC-08, SPEC-04 |
 | 10 | [Admin — Product Management](./10-admin-frontend.md) | FE | `[x] Complete` | SPEC-05, SPEC-06, SPEC-03 |
-| 11 | [Testing Strategy & Execution](./11-testing.md) | BE | `[ ] Not Started` | SPEC-02, SPEC-03, SPEC-04 |
+| 11 | [Testing Strategy & Execution](./11-testing.md) | BE | `[x] Complete` | SPEC-02, SPEC-03, SPEC-04 |
 | 12 | [Deployment — Vercel + Render + Neon](./12-deployment.md) | Infra | `[ ] Not Started` | All |
 | 13 | [Realistic Product Data — CSV Import](./13-realistic-product-data.md) | Both | `[x] Complete` | SPEC-03, SPEC-10 |
 
