@@ -23,8 +23,9 @@ public class ProductImportService {
 
     @Transactional
     public CsvImportResult importCsv(MultipartFile file) throws IOException {
-        int imported = 0;
-        int skipped = 0;
+        int inserted = 0;
+        int updated  = 0;
+        int skipped  = 0;
         List<String> errors = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(
@@ -32,7 +33,7 @@ public class ProductImportService {
 
             String header = reader.readLine();
             if (header == null) {
-                return new CsvImportResult(0, 0, List.of("File is empty"));
+                return new CsvImportResult(0, 0, 0, List.of("File is empty"));
             }
 
             String line;
@@ -48,26 +49,61 @@ public class ProductImportService {
                         continue;
                     }
 
-                    var product = new Product();
-                    product.setName(col(cols, 0));
-                    product.setBrand(col(cols, 1));
+                    String name  = col(cols, 0);
+                    String brand = col(cols, 1);
+
+                    // Delta: find existing product by name + brand (case-insensitive)
+                    var existing = productRepository.findByNameIgnoreCaseAndBrandIgnoreCase(name, brand);
+
+                    Product product = existing.orElseGet(Product::new);
+                    boolean isNew = existing.isEmpty();
+
+                    product.setName(name);
+                    product.setBrand(brand);
                     product.setDescription(colOrNull(cols, 2));
                     product.setPrice(new BigDecimal(col(cols, 3)));
                     product.setImageUrl(colOrNull(cols, 4));
                     product.setSizesCsv(colOrNull(cols, 5));
                     product.setStockQty(Integer.parseInt(col(cols, 6)));
+
                     productRepository.save(product);
-                    imported++;
+
+                    if (isNew) inserted++; else updated++;
+
                 } catch (Exception e) {
                     errors.add("Row " + row + ": " + e.getMessage());
                     skipped++;
                 }
             }
         }
-        return new CsvImportResult(imported, skipped, errors);
+        return new CsvImportResult(inserted, updated, skipped, errors);
     }
 
-    // Splits a CSV line respecting double-quoted fields
+    /** Export all current products as a CSV string. */
+    public String exportCsv() {
+        var sb = new StringBuilder();
+        sb.append("name,brand,description,price,imageUrl,sizesCsv,stockQty\n");
+        for (Product p : productRepository.findAll()) {
+            sb.append(csvField(p.getName())).append(',')
+              .append(csvField(p.getBrand())).append(',')
+              .append(csvField(p.getDescription())).append(',')
+              .append(p.getPrice().toPlainString()).append(',')
+              .append(csvField(p.getImageUrl())).append(',')
+              .append(csvField(p.getSizesCsv())).append(',')
+              .append(p.getStockQty()).append('\n');
+        }
+        return sb.toString();
+    }
+
+    // Wraps a field in double-quotes and escapes internal quotes.
+    private String csvField(String value) {
+        if (value == null) return "";
+        if (value.contains(",") || value.contains("\"") || value.contains("\n")) {
+            return "\"" + value.replace("\"", "\"\"") + "\"";
+        }
+        return value;
+    }
+
     private String[] parseLine(String line) {
         List<String> fields = new ArrayList<>();
         StringBuilder current = new StringBuilder();

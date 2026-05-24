@@ -21,9 +21,21 @@ export const productsApi = {
     const form = new FormData()
     form.append('file', file)
     return apiClient
-      .post<{ imported: number; skipped: number; errors: string[] }>('/products/import', form, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
+      .post<{ inserted: number; updated: number; skipped: number; errors: string[] }>(
+        '/products/import',
+        form,
+        { headers: { 'Content-Type': 'multipart/form-data' } },
+      )
       .then((r) => r.data)
+  },
+
+  exportCsv: async () => {
+    const response = await apiClient.get('/products/export', { responseType: 'blob' })
+    const url = URL.createObjectURL(new Blob([response.data], { type: 'text/csv' }))
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'products-export.csv'
+    a.click()
+    URL.revokeObjectURL(url)
   },
 }

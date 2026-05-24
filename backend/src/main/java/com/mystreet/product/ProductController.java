@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -79,7 +80,21 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Bulk import products from CSV (admin only)", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "Export all products as CSV (admin only)", security = @SecurityRequirement(name = "bearerAuth"))
+    @GetMapping("/export")
+    ResponseEntity<?> exportProducts() {
+        if (!AuthUtils.isCurrentUserAdmin()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(ErrorResponse.of("/api/products/export", "FORBIDDEN", "Admin access required"));
+        }
+        String csv = productImportService.exportCsv();
+        return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"products-export.csv\"")
+            .contentType(MediaType.parseMediaType("text/csv; charset=UTF-8"))
+            .body(csv);
+    }
+
+    @Operation(summary = "Bulk import products from CSV — upserts by name+brand (admin only)", security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<?> importProducts(@RequestParam("file") MultipartFile file) {
         if (!AuthUtils.isCurrentUserAdmin()) {

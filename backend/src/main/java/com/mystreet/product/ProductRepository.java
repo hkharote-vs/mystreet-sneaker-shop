@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ProductRepository
@@ -17,4 +18,6 @@ public interface ProductRepository
         WHERE p.id = :id AND p.stockQty >= :quantity
         """)
     int decrementStock(UUID id, int quantity);
+
+    Optional<Product> findByNameIgnoreCaseAndBrandIgnoreCase(String name, String brand);
 }
