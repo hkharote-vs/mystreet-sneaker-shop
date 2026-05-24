@@ -1,6 +1,6 @@
 # SPEC-04: Orders — Backend
 
-**Status:** `[ ] Not Started`  
+**Status:** `[x] Complete`  
 **Depends on:** SPEC-01 (schema), SPEC-02 (auth), SPEC-03 (product — for stock decrement)  
 **Blocks:** SPEC-09 (checkout frontend)  
 
