@@ -15,4 +15,4 @@ RUN addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appus
 USER appuser
 COPY --from=build --chown=appuser:appgroup /app/build/libs/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-XX:+UseZGC", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-XX:+UseSerialGC", "-Xmx220m", "-Xms64m", "-XX:MaxMetaspaceSize=128m", "-jar", "app.jar"]
