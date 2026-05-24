@@ -1,0 +1,35 @@
+# Java / Gradle
+backend/.gradle/
+backend/build/
+backend/out/
+*.class
+*.jar
+!gradle-wrapper.jar
+
+# Sensitive — never commit private key
+backend/src/main/resources/certs/private.pem
+
+# Node / pnpm
+frontend/node_modules/
+frontend/dist/
+frontend/.pnpm-store/
+.pnpm-debug.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Spring Boot
+backend/HELP.md
