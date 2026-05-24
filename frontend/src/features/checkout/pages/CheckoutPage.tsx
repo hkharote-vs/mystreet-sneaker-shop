@@ -1,10 +1,8 @@
 import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate, Link } from 'react-router-dom'
-import { AlertCircle, ArrowLeft, ShoppingBag } from 'lucide-react'
+import { AlertCircle, ArrowLeft, ShoppingBag, Lock } from 'lucide-react'
 import type { AxiosError } from 'axios'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { ShippingForm } from '../components/ShippingForm'
 import { PaymentModeSelector } from '../components/PaymentModeSelector'
 import { checkoutSchema, type CheckoutFormData } from '../checkout.schemas'
@@ -33,14 +31,17 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="container mx-auto px-4 py-24 text-center">
-        <div className="rounded-full glass p-8 w-fit mx-auto mb-6">
-          <ShoppingBag className="h-12 w-12 text-muted-foreground" />
+        <div className="inline-flex items-center justify-center rounded-full bg-zinc-100 p-8 mb-6">
+          <ShoppingBag className="h-12 w-12 text-zinc-400" />
         </div>
-        <p className="text-xl font-bold">Your cart is empty</p>
-        <p className="text-muted-foreground mt-1">Add some sneakers before checking out.</p>
-        <Button asChild className="mt-6">
-          <Link to="/">Browse Sneakers</Link>
-        </Button>
+        <p className="text-xl font-black text-zinc-900">Your cart is empty</p>
+        <p className="text-zinc-400 mt-1 text-sm">Add some sneakers before checking out.</p>
+        <Link
+          to="/"
+          className="mt-6 inline-block rounded-full bg-zinc-950 px-6 py-2.5 text-sm font-bold text-white hover:bg-orange-500 transition-colors"
+        >
+          Browse Sneakers
+        </Link>
       </div>
     )
   }
@@ -72,80 +73,109 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      <button
-        onClick={() => navigate(-1)}
-        className="mb-8 flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Back to Cart
-      </button>
+    <div className="bg-white min-h-screen">
+      <div className="container mx-auto px-4 py-10">
+        <button
+          onClick={() => navigate(-1)}
+          className="mb-8 inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-400 hover:text-zinc-900 transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Cart
+        </button>
 
-      <h1 className="mb-8 text-4xl font-black gradient-text">Checkout</h1>
+        <h1 className="mb-10 text-4xl font-black text-zinc-950 tracking-tight">Checkout</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <div className="grid gap-8 lg:grid-cols-3">
-          {/* Left: Forms */}
-          <div className="space-y-8 lg:col-span-2">
-            {apiErrorMessage && (
-              <div className="flex items-start gap-3 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
-                <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
-                {apiErrorMessage}
-              </div>
-            )}
-
-            <div className="glass rounded-2xl p-6 gradient-border space-y-0">
-              <ShippingForm register={register} errors={errors} />
-            </div>
-
-            <div className="glass rounded-2xl p-6 gradient-border">
-              <PaymentModeSelector
-                register={register}
-                errors={errors}
-                selectedMode={selectedPaymentMode}
-              />
-            </div>
+        {apiErrorMessage && (
+          <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 font-semibold mb-8">
+            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+            {apiErrorMessage}
           </div>
+        )}
 
-          {/* Right: Order summary */}
-          <div className="lg:col-span-1">
-            <div className="glass rounded-2xl p-6 gradient-border sticky top-24 space-y-4">
-              <h2 className="font-bold text-lg">Order Summary</h2>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <div className="grid gap-8 lg:grid-cols-3">
 
-              <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
-                {items.map((item) => (
-                  <div
-                    key={`${item.productId}-${item.size}`}
-                    className="flex justify-between text-sm gap-2"
-                  >
-                    <span className="text-muted-foreground truncate">
-                      {item.name} <span className="text-slate-500">(UK {item.size}) ×{item.quantity}</span>
-                    </span>
-                    <span className="font-semibold shrink-0">
-                      ₹{(item.price * item.quantity).toLocaleString('en-IN')}
+            {/* Left: Forms */}
+            <div className="space-y-6 lg:col-span-2">
+              <div className="rounded-2xl border-2 border-zinc-100 bg-white p-6">
+                <ShippingForm register={register} errors={errors} />
+              </div>
+
+              <div className="rounded-2xl border-2 border-zinc-100 bg-white p-6">
+                <PaymentModeSelector
+                  register={register}
+                  errors={errors}
+                  selectedMode={selectedPaymentMode}
+                />
+              </div>
+            </div>
+
+            {/* Right: Order summary */}
+            <div className="lg:col-span-1">
+              <div className="rounded-2xl border-2 border-zinc-100 bg-white p-6 sticky top-24 space-y-5">
+                <h2 className="text-lg font-black text-zinc-950">Order Summary</h2>
+
+                <div className="space-y-3 max-h-64 overflow-y-auto">
+                  {items.map((item) => (
+                    <div
+                      key={`${item.productId}-${item.size}`}
+                      className="flex justify-between items-start gap-3"
+                    >
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-zinc-800 truncate">{item.name}</p>
+                        <p className="text-xs text-zinc-400 mt-0.5">UK {item.size} · Qty {item.quantity}</p>
+                      </div>
+                      <span className="text-sm font-bold text-zinc-900 shrink-0">
+                        ₹{(item.price * item.quantity).toLocaleString('en-IN')}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="border-t-2 border-zinc-100 pt-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-semibold text-zinc-500">Subtotal</span>
+                    <span className="text-sm font-semibold text-zinc-700">₹{totalPrice.toLocaleString('en-IN')}</span>
+                  </div>
+                  <div className="flex justify-between items-center mt-1.5">
+                    <span className="text-sm font-semibold text-zinc-500">Delivery</span>
+                    <span className="text-sm font-bold text-green-600">Free</span>
+                  </div>
+                  <div className="flex justify-between items-center mt-4 pt-4 border-t-2 border-zinc-100">
+                    <span className="text-base font-black text-zinc-950">Total</span>
+                    <span className="text-xl font-black text-zinc-950">
+                      ₹{totalPrice.toLocaleString('en-IN')}
                     </span>
                   </div>
-                ))}
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isPending}
+                  className="w-full h-14 rounded-2xl bg-zinc-950 text-white text-sm font-black uppercase tracking-widest hover:bg-orange-500 transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {isPending ? (
+                    <>
+                      <span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                      Placing Order…
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="h-4 w-4" />
+                      Place Order
+                    </>
+                  )}
+                </button>
+
+                <p className="text-xs text-center text-zinc-400">
+                  Mock checkout — no real payment processed
+                </p>
               </div>
-
-              <Separator />
-
-              <div className="flex justify-between font-bold text-lg">
-                <span>Total</span>
-                <span className="gradient-text">₹{totalPrice.toLocaleString('en-IN')}</span>
-              </div>
-
-              <Button type="submit" className="w-full" size="lg" disabled={isPending}>
-                {isPending ? 'Placing Order...' : 'Place Order'}
-              </Button>
-
-              <p className="text-xs text-center text-muted-foreground">
-                Secure mock checkout — no real payment
-              </p>
             </div>
+
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   )
 }

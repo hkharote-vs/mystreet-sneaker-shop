@@ -22,21 +22,20 @@ export default function ProductListPage() {
     <div>
       {/* Hero banner */}
       <section className="hero-banner">
-        <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 mb-5">
-            New Season · 2026
-          </p>
-          <h1 className="text-5xl md:text-8xl font-black text-white leading-none tracking-tight uppercase">
-            Fresh<br />
-            <span className="text-orange-500 italic">Kicks</span>
-          </h1>
-          <p className="mt-6 text-zinc-400 text-base md:text-lg max-w-md leading-relaxed">
-            Authentic sneakers from the world's top brands — in stock and ready to ship.
-          </p>
+        <div className="container mx-auto px-4 py-10 md:py-14 relative z-10 flex items-center justify-between gap-8">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 mb-3">
+              New Season · 2026
+            </p>
+            <h1 className="text-4xl md:text-6xl font-black text-white leading-none tracking-tight uppercase">
+              Fresh <span className="text-orange-500 italic">Kicks</span>
+            </h1>
+            <p className="mt-4 text-zinc-400 text-sm max-w-sm leading-relaxed">
+              Authentic sneakers from the world's top brands — in stock and ready to ship.
+            </p>
+          </div>
         </div>
-        {/* Decorative blobs */}
-        <div className="absolute right-0 top-0 -translate-y-1/4 translate-x-1/4 w-[32rem] h-[32rem] rounded-full bg-orange-500/8 blur-3xl pointer-events-none" />
-        <div className="absolute left-1/2 bottom-0 translate-y-1/3 w-64 h-64 rounded-full bg-violet-500/8 blur-3xl pointer-events-none" />
+        <div className="absolute right-0 top-0 w-72 h-72 rounded-full bg-orange-500/8 blur-3xl pointer-events-none" />
       </section>
 
       {/* Catalog section */}

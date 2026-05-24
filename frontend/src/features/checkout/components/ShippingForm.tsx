@@ -8,80 +8,90 @@ interface Props {
   errors: FieldErrors<CheckoutFormData>
 }
 
+function Field({
+  id,
+  label,
+  error,
+  children,
+}: {
+  id: string
+  label: string
+  error?: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="space-y-1.5">
+      <Label htmlFor={id} className="text-sm font-bold text-zinc-800">
+        {label}
+      </Label>
+      {children}
+      {error && <p className="text-xs font-semibold text-red-500">{error}</p>}
+    </div>
+  )
+}
+
 export function ShippingForm({ register, errors }: Props) {
   return (
-    <div className="space-y-4">
-      <h2 className="text-lg font-bold gradient-text">Shipping Address</h2>
+    <div className="space-y-5">
+      <div>
+        <h2 className="text-xl font-black text-zinc-950">Shipping Address</h2>
+        <p className="text-sm text-zinc-400 mt-0.5">Where should we deliver your order?</p>
+      </div>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="shippingName" className="text-slate-300">Full Name</Label>
+      <Field id="shippingName" label="Full Name" error={errors.shippingName?.message}>
         <Input
           id="shippingName"
-          placeholder="John Doe"
+          placeholder="e.g. Rahul Sharma"
+          className="h-12 rounded-xl border-2 border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-300 focus:border-zinc-900 focus-visible:ring-0"
           aria-invalid={!!errors.shippingName}
           {...register('shippingName')}
         />
-        {errors.shippingName && (
-          <p className="text-xs text-red-400">{errors.shippingName.message}</p>
-        )}
-      </div>
+      </Field>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="shippingAddressLine" className="text-slate-300">Address</Label>
+      <Field id="shippingAddressLine" label="Address" error={errors.shippingAddressLine?.message}>
         <Input
           id="shippingAddressLine"
-          placeholder="123 Street Name, Apartment"
+          placeholder="e.g. Flat 4B, MG Road"
+          className="h-12 rounded-xl border-2 border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-300 focus:border-zinc-900 focus-visible:ring-0"
           aria-invalid={!!errors.shippingAddressLine}
           {...register('shippingAddressLine')}
         />
-        {errors.shippingAddressLine && (
-          <p className="text-xs text-red-400">{errors.shippingAddressLine.message}</p>
-        )}
-      </div>
+      </Field>
 
       <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-1.5">
-          <Label htmlFor="shippingCity" className="text-slate-300">City</Label>
+        <Field id="shippingCity" label="City" error={errors.shippingCity?.message}>
           <Input
             id="shippingCity"
             placeholder="Mumbai"
+            className="h-12 rounded-xl border-2 border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-300 focus:border-zinc-900 focus-visible:ring-0"
             aria-invalid={!!errors.shippingCity}
             {...register('shippingCity')}
           />
-          {errors.shippingCity && (
-            <p className="text-xs text-red-400">{errors.shippingCity.message}</p>
-          )}
-        </div>
+        </Field>
 
-        <div className="space-y-1.5">
-          <Label htmlFor="shippingPin" className="text-slate-300">PIN Code</Label>
+        <Field id="shippingPin" label="PIN Code" error={errors.shippingPin?.message}>
           <Input
             id="shippingPin"
             placeholder="400001"
             maxLength={6}
+            className="h-12 rounded-xl border-2 border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-300 focus:border-zinc-900 focus-visible:ring-0"
             aria-invalid={!!errors.shippingPin}
             {...register('shippingPin')}
           />
-          {errors.shippingPin && (
-            <p className="text-xs text-red-400">{errors.shippingPin.message}</p>
-          )}
-        </div>
+        </Field>
       </div>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="shippingPhone" className="text-slate-300">Phone Number</Label>
+      <Field id="shippingPhone" label="Phone Number" error={errors.shippingPhone?.message}>
         <Input
           id="shippingPhone"
           type="tel"
           placeholder="9876543210"
           maxLength={10}
+          className="h-12 rounded-xl border-2 border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-300 focus:border-zinc-900 focus-visible:ring-0"
           aria-invalid={!!errors.shippingPhone}
           {...register('shippingPhone')}
         />
-        {errors.shippingPhone && (
-          <p className="text-xs text-red-400">{errors.shippingPhone.message}</p>
-        )}
-      </div>
+      </Field>
     </div>
   )
 }

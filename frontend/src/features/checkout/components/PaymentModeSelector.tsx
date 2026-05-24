@@ -13,24 +13,24 @@ const PAYMENT_OPTIONS = [
   {
     id: 'MOCK_COD' as const,
     label: 'Cash on Delivery',
-    description: 'Pay when your order arrives',
+    description: 'Pay when your order arrives at your door',
     emoji: '💵',
   },
   {
     id: 'MOCK_UPI' as const,
     label: 'Mock UPI',
-    description: 'Simulated instant payment',
+    description: 'Simulated instant UPI payment',
     emoji: '📱',
   },
 ]
 
 export function PaymentModeSelector({ register, errors, selectedMode }: Props) {
   return (
-    <div className="space-y-3">
-      <h2 className="text-lg font-bold gradient-text">Payment Method</h2>
-      <p className="text-xs text-muted-foreground">
-        All payments are simulated — no real money involved
-      </p>
+    <div className="space-y-4">
+      <div>
+        <h2 className="text-xl font-black text-zinc-950">Payment Method</h2>
+        <p className="text-sm text-zinc-400 mt-0.5">All payments are simulated — no real money</p>
+      </div>
 
       <div className="space-y-3">
         {PAYMENT_OPTIONS.map((option) => {
@@ -40,10 +40,10 @@ export function PaymentModeSelector({ register, errors, selectedMode }: Props) {
               key={option.id}
               htmlFor={option.id}
               className={cn(
-                'flex cursor-pointer items-center gap-4 rounded-xl border p-4 transition-all duration-200',
+                'flex cursor-pointer items-center gap-4 rounded-2xl border-2 p-4 transition-all duration-150',
                 isSelected
-                  ? 'border-violet-500/60 bg-violet-500/10 shadow-lg shadow-violet-500/10'
-                  : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/8',
+                  ? 'border-zinc-950 bg-zinc-50 shadow-sm'
+                  : 'border-zinc-200 bg-white hover:border-zinc-400',
               )}
             >
               <input
@@ -53,26 +53,28 @@ export function PaymentModeSelector({ register, errors, selectedMode }: Props) {
                 {...register('paymentMode')}
                 className="sr-only"
               />
-              <span className="text-2xl">{option.emoji}</span>
-              <div className="flex-1">
-                <p className="font-semibold text-sm">{option.label}</p>
-                <p className="text-xs text-muted-foreground">{option.description}</p>
+              <span className="text-2xl select-none">{option.emoji}</span>
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-sm text-zinc-900">{option.label}</p>
+                <p className="text-xs text-zinc-500 mt-0.5">{option.description}</p>
               </div>
               <div
                 className={cn(
-                  'h-4 w-4 rounded-full border-2 transition-all',
+                  'h-5 w-5 rounded-full border-2 flex items-center justify-center transition-all shrink-0',
                   isSelected
-                    ? 'border-violet-500 bg-violet-500'
-                    : 'border-slate-500',
+                    ? 'border-zinc-950 bg-zinc-950'
+                    : 'border-zinc-300 bg-white',
                 )}
-              />
+              >
+                {isSelected && <span className="h-2 w-2 rounded-full bg-white block" />}
+              </div>
             </Label>
           )
         })}
       </div>
 
       {errors.paymentMode && (
-        <p className="text-xs text-red-400">{errors.paymentMode.message}</p>
+        <p className="text-xs font-semibold text-red-500">{errors.paymentMode.message}</p>
       )}
     </div>
   )
