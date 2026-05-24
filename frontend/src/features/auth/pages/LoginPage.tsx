@@ -25,22 +25,30 @@ export default function LoginPage() {
   const apiErrorMessage = (error as AxiosError<ApiError>)?.response?.data?.message ?? null
 
   return (
-    <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Welcome back</CardTitle>
-          <CardDescription>Sign in to your MyStreeT account</CardDescription>
+    <div className="relative flex min-h-[calc(100vh-8rem)] items-center justify-center px-4 overflow-hidden">
+      {/* Decorative glow blobs */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute left-1/4 top-1/4 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600/20 blur-3xl" />
+        <div className="absolute right-1/4 bottom-1/4 h-48 w-48 translate-x-1/2 translate-y-1/2 rounded-full bg-blue-500/15 blur-3xl" />
+      </div>
+
+      <Card className="relative w-full max-w-md gradient-border">
+        <CardHeader className="pb-2 text-center">
+          <div className="mx-auto mb-3 text-3xl font-black gradient-text">MyStreeT</div>
+          <CardTitle className="text-xl">Welcome back</CardTitle>
+          <CardDescription>Sign in to your account</CardDescription>
         </CardHeader>
+
         <CardContent>
           <form onSubmit={handleSubmit((data) => login(data))} className="space-y-4" noValidate>
             {apiErrorMessage && (
-              <div className="rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive">
+              <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
                 {apiErrorMessage}
               </div>
             )}
 
-            <div className="space-y-1">
-              <Label htmlFor="email">Email</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="email" className="text-slate-300">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -50,12 +58,12 @@ export default function LoginPage() {
                 {...register('email')}
               />
               {errors.email && (
-                <p className="text-xs text-destructive">{errors.email.message}</p>
+                <p className="text-xs text-red-400">{errors.email.message}</p>
               )}
             </div>
 
-            <div className="space-y-1">
-              <Label htmlFor="password">Password</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="password" className="text-slate-300">Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -65,7 +73,7 @@ export default function LoginPage() {
                 {...register('password')}
               />
               {errors.password && (
-                <p className="text-xs text-destructive">{errors.password.message}</p>
+                <p className="text-xs text-red-400">{errors.password.message}</p>
               )}
             </div>
 
@@ -74,9 +82,9 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <p className="mt-4 text-center text-sm text-muted-foreground">
+          <p className="mt-5 text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{' '}
-            <Link to="/register" className="font-medium text-primary hover:underline">
+            <Link to="/register" className="font-semibold text-violet-400 hover:text-violet-300 transition-colors">
               Register
             </Link>
           </p>

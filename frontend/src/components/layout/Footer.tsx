@@ -1,7 +1,7 @@
 export function Footer() {
   return (
-    <footer className="border-t py-6 text-center text-sm text-muted-foreground">
-      © 2026 MyStreeT. Built with React + Spring Boot.
+    <footer className="border-t border-white/10 py-6 text-center text-sm text-muted-foreground">
+      © 2026 <span className="gradient-text font-semibold">MyStreeT</span>. Built with React + Spring Boot.
     </footer>
   )
 }
