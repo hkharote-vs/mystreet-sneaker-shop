@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { ShoppingCart, ArrowLeft, AlertCircle } from 'lucide-react'
+import { ShoppingCart, ArrowLeft, AlertCircle, Minus, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -15,6 +15,7 @@ export default function ProductDetailPage() {
   const addItem = useCartStore((s) => s.addItem)
 
   const [selectedSize, setSelectedSize] = useState('')
+  const [quantity, setQuantity] = useState(1)
 
   const { data: product, isLoading, isError } = useProduct(id!)
 
@@ -32,12 +33,12 @@ export default function ProductDetailPage() {
       price: product.price,
       imageUrl: product.imageUrl,
       size: selectedSize,
-      quantity: 1,
+      quantity,
     })
 
     toast({
       title: 'Added to cart',
-      description: `${product.name} · UK ${selectedSize}`,
+      description: `${product.name} · UK ${selectedSize} · Qty ${quantity}`,
     })
   }
 
@@ -130,6 +131,30 @@ export default function ProductDetailPage() {
                   selectedSize={selectedSize}
                   onSelect={setSelectedSize}
                 />
+              </div>
+
+              {/* Quantity selector */}
+              <div>
+                <p className="mb-3 text-sm font-semibold text-slate-300 uppercase tracking-wider">Quantity</p>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-slate-300 hover:border-violet-500/50 hover:bg-violet-500/10 hover:text-white transition-all"
+                    aria-label="Decrease quantity"
+                  >
+                    <Minus className="h-4 w-4" />
+                  </button>
+                  <span className="w-8 text-center text-lg font-semibold tabular-nums">{quantity}</span>
+                  <button
+                    type="button"
+                    onClick={() => setQuantity((q) => Math.min(product.stockQty, q + 1))}
+                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-slate-300 hover:border-violet-500/50 hover:bg-violet-500/10 hover:text-white transition-all"
+                    aria-label="Increase quantity"
+                  >
+                    <Plus className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
 
               <Button size="lg" className="w-full gap-2 text-base" onClick={handleAddToCart}>
