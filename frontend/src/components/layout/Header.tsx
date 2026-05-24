@@ -1,12 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { ShoppingCart, LogOut, ShieldAlert, LogIn } from 'lucide-react'
+import { LogOut, ShieldAlert, LogIn } from 'lucide-react'
 import { useAuthStore } from '@/features/auth/auth.store'
-import { useCartStore } from '@/features/cart/cart.store'
+import { CartDrawer } from '@/features/cart/components/CartDrawer'
 
 export function Header() {
   const navigate = useNavigate()
   const { user, isAuthenticated, clearAuth } = useAuthStore()
-  const totalItems = useCartStore((s) => s.totalItems())
 
   const handleLogout = () => {
     clearAuth()
@@ -31,18 +30,7 @@ export function Header() {
             </Link>
           )}
 
-          <Link
-            to="/cart"
-            className="relative rounded-lg p-2 text-slate-300 hover:bg-white/10 hover:text-white transition-colors"
-            aria-label="Cart"
-          >
-            <ShoppingCart className="h-5 w-5" />
-            {totalItems > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-violet-500 text-[10px] font-bold text-white shadow-lg shadow-violet-500/50">
-                {totalItems > 99 ? '99+' : totalItems}
-              </span>
-            )}
-          </Link>
+          <CartDrawer />
 
           {isAuthenticated ? (
             <button
