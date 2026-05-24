@@ -1,5 +1,5 @@
 CREATE TABLE orders (
-    id             UUID           DEFAULT RANDOM_UUID() NOT NULL,
+    id             UUID           DEFAULT gen_random_uuid() NOT NULL,
     user_id        UUID           NOT NULL,
     status         VARCHAR(50)    NOT NULL DEFAULT 'PLACED',
     payment_mode   VARCHAR(50)    NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE orders (
 );
 
 CREATE TABLE order_items (
-    id            UUID           DEFAULT RANDOM_UUID() NOT NULL,
+    id            UUID           DEFAULT gen_random_uuid() NOT NULL,
     order_id      UUID           NOT NULL,
     product_id    UUID,
     product_name  VARCHAR(255)   NOT NULL,

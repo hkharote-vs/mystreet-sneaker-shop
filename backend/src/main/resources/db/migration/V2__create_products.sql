@@ -1,5 +1,5 @@
 CREATE TABLE products (
-    id          UUID           DEFAULT RANDOM_UUID() NOT NULL,
+    id          UUID           DEFAULT gen_random_uuid() NOT NULL,
     name        VARCHAR(255)   NOT NULL,
     brand       VARCHAR(100)   NOT NULL,
     description VARCHAR(2000),
