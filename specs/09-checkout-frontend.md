@@ -1,6 +1,6 @@
 # SPEC-09: Checkout & Order Confirmation — Frontend
 
-**Status:** `[ ] Not Started`  
+**Status:** `[x] Complete`  
 **Depends on:** SPEC-05, SPEC-06 (auth), SPEC-08 (cart store), SPEC-04 (order backend)  
 **Blocks:** Nothing (final user-facing flow)  
 

@@ -1,6 +1,6 @@
 # SPEC-08: Shopping Cart — Frontend
 
-**Status:** `[ ] Not Started`  
+**Status:** `[x] Complete`  
 **Depends on:** SPEC-05 (cart store already defined), SPEC-07 (product pages add to cart)  
 **Blocks:** SPEC-09 (checkout reads from cart)  
 

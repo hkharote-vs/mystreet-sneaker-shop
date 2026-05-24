@@ -1,0 +1,16 @@
+app:
+  jwt:
+    private-key: classpath:certs/test-private.pem
+    public-key: classpath:certs/test-public.pem
+  cors:
+    allowed-origins: http://localhost:5173
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+  h2:
+    console:
+      enabled: false

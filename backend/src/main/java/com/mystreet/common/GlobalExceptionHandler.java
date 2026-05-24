@@ -1,6 +1,7 @@
 package com.mystreet.common;
 
 import com.mystreet.auth.exception.EmailAlreadyExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest()
             .body(ErrorResponse.of(req.getRequestURI(), "VALIDATION_ERROR",
                 "Constraint violation", details));
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    ResponseEntity<ErrorResponse> handleNotFound(EntityNotFoundException ex, HttpServletRequest req) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(ErrorResponse.of(req.getRequestURI(), "NOT_FOUND", ex.getMessage()));
     }
 
     @ExceptionHandler(EmailAlreadyExistsException.class)

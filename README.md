@@ -2,10 +2,16 @@
 
 Full-stack sneaker e-commerce app. React 19 + Spring Boot 3.5 + Java 21.
 
-## Live (coming in SPEC-12)
-- Frontend: Vercel
-- Backend: Render.com
-- Database: Neon PostgreSQL
+## Live Demo
+
+| | URL |
+|---|---|
+| **Frontend** | https://mystreet-sneaker-shop.vercel.app |
+| **API Docs (Swagger)** | https://mystreet-api.onrender.com/swagger-ui.html |
+| **Demo Admin** | admin@mystreet.com / Admin@1234 |
+| **Demo User** | user@mystreet.com / User@1234 |
+
+> The backend runs on Render's free tier — first request after inactivity may take ~30s to warm up.
 
 ## Tech Stack
 - **Frontend:** React 19, Vite 8, TypeScript 6, Tailwind CSS v4, TanStack Query v5, Zustand v5, React Router v7
@@ -48,6 +54,12 @@ See [`specs/README.md`](specs/README.md) for the full spec-driven development pl
 
 ## Running Tests
 ```bash
+# Backend unit + controller tests (no Docker needed)
 cd backend && ./gradlew test
+
+# Backend integration tests (requires Docker)
+cd backend && ./gradlew integrationTest
+
+# Frontend type check
 cd frontend && pnpm run type-check
 ```

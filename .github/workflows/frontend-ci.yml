@@ -10,13 +10,14 @@ on:
 
 jobs:
   quality:
+    name: Lint, Type Check & Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
         with:
-          version: 11
+          version: 9
 
       - uses: actions/setup-node@v4
         with:
@@ -24,7 +25,7 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: frontend/pnpm-lock.yaml
 
-      - name: Install
+      - name: Install dependencies
         working-directory: frontend
         run: pnpm install --frozen-lockfile
 
@@ -32,6 +33,18 @@ jobs:
         working-directory: frontend
         run: pnpm run type-check
 
+      - name: Lint
+        working-directory: frontend
+        run: pnpm run lint
+
       - name: Build
         working-directory: frontend
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL || 'https://mystreet-api.onrender.com/api' }}
         run: pnpm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist/

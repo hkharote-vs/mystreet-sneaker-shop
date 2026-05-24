@@ -1,6 +1,6 @@
 # SPEC-05: Frontend Setup & Shell
 
-**Status:** `[ ] Not Started`  
+**Status:** `[x] Complete`  
 **Depends on:** SPEC-00 (project setup)  
 **Blocks:** SPEC-06, SPEC-07, SPEC-08, SPEC-09, SPEC-10  
 

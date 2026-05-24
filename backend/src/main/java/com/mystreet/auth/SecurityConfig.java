@@ -36,6 +36,10 @@ public class SecurityConfig {
     @Value("${app.jwt.private-key}")
     private Resource privateKeyResource;
 
+    // Production: set JWT_PRIVATE_KEY_CONTENT env var with full PEM content
+    @Value("${app.jwt.private-key-content:#{null}}")
+    private String privateKeyContent;
+
     @Value("${app.cors.allowed-origins}")
     private String allowedOrigins;
 
@@ -71,7 +75,9 @@ public class SecurityConfig {
     @Bean
     JwtEncoder jwtEncoder() throws Exception {
         RSAPublicKey publicKey = (RSAPublicKey) PemUtils.readPublicKey(publicKeyResource);
-        RSAPrivateKey privateKey = (RSAPrivateKey) PemUtils.readPrivateKey(privateKeyResource);
+        RSAPrivateKey privateKey = (privateKeyContent != null && !privateKeyContent.isBlank())
+            ? (RSAPrivateKey) PemUtils.readPrivateKeyFromString(privateKeyContent)
+            : (RSAPrivateKey) PemUtils.readPrivateKey(privateKeyResource);
         var jwk = new RSAKey.Builder(publicKey).privateKey(privateKey).build();
         return new NimbusJwtEncoder(new ImmutableJWKSet<>(new JWKSet(jwk)));
     }

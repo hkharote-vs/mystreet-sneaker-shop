@@ -1,6 +1,6 @@
 # SPEC-01: Database Schema & Migrations
 
-**Status:** `[ ] Not Started`  
+**Status:** `[x] Complete`  
 **Depends on:** SPEC-00 (project setup)  
 **Blocks:** SPEC-02, SPEC-03, SPEC-04  
 

@@ -1,6 +1,6 @@
 # SPEC-03: Product Catalog — Backend
 
-**Status:** `[ ] Not Started`  
+**Status:** `[x] Complete`  
 **Depends on:** SPEC-01 (schema), SPEC-02 (auth/security config)  
 **Blocks:** SPEC-07 (product frontend)  
 

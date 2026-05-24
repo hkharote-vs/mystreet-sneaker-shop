@@ -22,19 +22,20 @@ All feature specs live here. Work through them **in order**. Each spec must be f
 
 | # | Spec | Layer | Status | Depends On |
 |---|---|---|---|---|
-| 00 | [Project Setup & Infrastructure](./00-project-setup.md) | Both | `[ ] Not Started` | — |
-| 01 | [Database Schema & Migrations](./01-database-schema.md) | DB | `[ ] Not Started` | SPEC-00 |
-| 02 | [Authentication — Backend](./02-auth-backend.md) | BE | `[ ] Not Started` | SPEC-01 |
-| 03 | [Product Catalog — Backend](./03-product-backend.md) | BE | `[ ] Not Started` | SPEC-01, SPEC-02 |
-| 04 | [Orders — Backend](./04-order-backend.md) | BE | `[ ] Not Started` | SPEC-01, SPEC-02, SPEC-03 |
-| 05 | [Frontend Setup & Shell](./05-frontend-setup.md) | FE | `[ ] Not Started` | SPEC-00 |
-| 06 | [Authentication — Frontend](./06-auth-frontend.md) | FE | `[ ] Not Started` | SPEC-05, SPEC-02 |
-| 07 | [Product Catalog — Frontend](./07-product-frontend.md) | FE | `[ ] Not Started` | SPEC-05, SPEC-03 |
-| 08 | [Shopping Cart — Frontend](./08-cart-frontend.md) | FE | `[ ] Not Started` | SPEC-05, SPEC-07 |
-| 09 | [Checkout & Orders — Frontend](./09-checkout-frontend.md) | FE | `[ ] Not Started` | SPEC-05, SPEC-06, SPEC-08, SPEC-04 |
-| 10 | [Admin — Product Management](./10-admin-frontend.md) | FE | `[ ] Not Started` | SPEC-05, SPEC-06, SPEC-03 |
-| 11 | [Testing Strategy & Execution](./11-testing.md) | BE | `[ ] Not Started` | SPEC-02, SPEC-03, SPEC-04 |
+| 00 | [Project Setup & Infrastructure](./00-project-setup.md) | Both | `[x] Complete` | — |
+| 01 | [Database Schema & Migrations](./01-database-schema.md) | DB | `[x] Complete` | SPEC-00 |
+| 02 | [Authentication — Backend](./02-auth-backend.md) | BE | `[x] Complete` | SPEC-01 |
+| 03 | [Product Catalog — Backend](./03-product-backend.md) | BE | `[x] Complete` | SPEC-01, SPEC-02 |
+| 04 | [Orders — Backend](./04-order-backend.md) | BE | `[x] Complete` | SPEC-01, SPEC-02, SPEC-03 |
+| 05 | [Frontend Setup & Shell](./05-frontend-setup.md) | FE | `[x] Complete` | SPEC-00 |
+| 06 | [Authentication — Frontend](./06-auth-frontend.md) | FE | `[x] Complete` | SPEC-05, SPEC-02 |
+| 07 | [Product Catalog — Frontend](./07-product-frontend.md) | FE | `[x] Complete` | SPEC-05, SPEC-03 |
+| 08 | [Shopping Cart — Frontend](./08-cart-frontend.md) | FE | `[x] Complete` | SPEC-05, SPEC-07 |
+| 09 | [Checkout & Orders — Frontend](./09-checkout-frontend.md) | FE | `[x] Complete` | SPEC-05, SPEC-06, SPEC-08, SPEC-04 |
+| 10 | [Admin — Product Management](./10-admin-frontend.md) | FE | `[x] Complete` | SPEC-05, SPEC-06, SPEC-03 |
+| 11 | [Testing Strategy & Execution](./11-testing.md) | BE | `[x] Complete` | SPEC-02, SPEC-03, SPEC-04 |
 | 12 | [Deployment — Vercel + Render + Neon](./12-deployment.md) | Infra | `[ ] Not Started` | All |
+| 13 | [Realistic Product Data — CSV Import](./13-realistic-product-data.md) | Both | `[x] Complete` | SPEC-03, SPEC-10 |
 
 ---
 

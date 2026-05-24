@@ -16,4 +16,14 @@ export const productsApi = {
 
   remove: (id: string) =>
     apiClient.delete(`/products/${id}`).then((r) => r.data),
+
+  importCsv: (file: File) => {
+    const form = new FormData()
+    form.append('file', file)
+    return apiClient
+      .post<{ imported: number; skipped: number; errors: string[] }>('/products/import', form, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then((r) => r.data)
+  },
 }
