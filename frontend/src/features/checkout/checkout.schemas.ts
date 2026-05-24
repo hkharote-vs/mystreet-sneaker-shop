@@ -7,7 +7,7 @@ export const checkoutSchema = z.object({
   shippingPin: z.string().regex(/^\d{6}$/, 'PIN code must be exactly 6 digits'),
   shippingPhone: z.string().regex(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
   paymentMode: z.enum(['MOCK_COD', 'MOCK_UPI'], {
-    required_error: 'Please select a payment method',
+    error: 'Please select a payment method',
   }),
 })
 
