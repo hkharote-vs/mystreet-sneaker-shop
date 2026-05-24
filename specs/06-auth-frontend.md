@@ -1,6 +1,6 @@
 # SPEC-06: Authentication — Frontend
 
-**Status:** `[ ] Not Started`  
+**Status:** `[x] Complete`  
 **Depends on:** SPEC-05 (frontend setup), SPEC-02 (auth backend running)  
 **Blocks:** SPEC-09 (checkout — needs auth), SPEC-10 (admin — needs auth)  
 
