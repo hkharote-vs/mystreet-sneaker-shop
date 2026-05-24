@@ -3,7 +3,7 @@ FROM eclipse-temurin:21-jdk-alpine AS build
 WORKDIR /app
 COPY gradlew gradlew
 COPY gradle gradle/
-COPY build.gradle.kts settings.gradle.kts ./
+COPY build.gradle settings.gradle ./
 RUN chmod +x gradlew && ./gradlew dependencies --no-daemon --quiet
 COPY src src/
 RUN ./gradlew bootJar --no-daemon -x test

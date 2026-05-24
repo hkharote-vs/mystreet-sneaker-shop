@@ -19,14 +19,22 @@ final class PemUtils {
 
     static PublicKey readPublicKey(Resource resource)
             throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        String pem = resource.getContentAsString(StandardCharsets.UTF_8);
-        byte[] der = decodePem(pem);
-        return KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(der));
+        return readPublicKeyFromString(resource.getContentAsString(StandardCharsets.UTF_8));
     }
 
     static PrivateKey readPrivateKey(Resource resource)
             throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        String pem = resource.getContentAsString(StandardCharsets.UTF_8);
+        return readPrivateKeyFromString(resource.getContentAsString(StandardCharsets.UTF_8));
+    }
+
+    static PublicKey readPublicKeyFromString(String pem)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] der = decodePem(pem);
+        return KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(der));
+    }
+
+    static PrivateKey readPrivateKeyFromString(String pem)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
         byte[] der = decodePem(pem);
         return KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(der));
     }
