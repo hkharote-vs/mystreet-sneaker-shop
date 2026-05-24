@@ -1,5 +1,8 @@
-import { useState } from 'react'
-import { Plus, Pencil, Trash2, ShieldAlert, Package } from 'lucide-react'
+import { useState, useRef } from 'react'
+import { Plus, Pencil, Trash2, ShieldAlert, Package, Upload } from 'lucide-react'
+import { useQueryClient } from '@tanstack/react-query'
+import { productsApi } from '@/api/products.api'
+import { PRODUCT_KEYS } from '@/features/products/hooks/useProducts'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -15,6 +18,28 @@ import type { ProductDetail, ProductSummary } from '@/types'
 
 export default function AdminProductsPage() {
   const { data: products, isLoading } = useProducts()
+  const queryClient = useQueryClient()
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [isImporting, setIsImporting] = useState(false)
+
+  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setIsImporting(true)
+    try {
+      const result = await productsApi.importCsv(file)
+      toast({
+        title: `Imported ${result.imported} products`,
+        description: result.skipped > 0 ? `${result.skipped} rows skipped` : undefined,
+      })
+      queryClient.invalidateQueries({ queryKey: PRODUCT_KEYS.all })
+    } catch {
+      toast({ title: 'Import failed', variant: 'destructive' })
+    } finally {
+      setIsImporting(false)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
 
   const [showAddModal, setShowAddModal] = useState(false)
   const [editingProduct, setEditingProduct] = useState<ProductDetail | null>(null)
@@ -55,10 +80,28 @@ export default function AdminProductsPage() {
             {products?.length ?? 0} products in catalog
           </p>
         </div>
-        <Button onClick={() => setShowAddModal(true)} className="gap-2">
-          <Plus className="h-4 w-4" />
-          Add Product
-        </Button>
+        <div className="flex gap-2">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".csv"
+            className="hidden"
+            onChange={handleImport}
+          />
+          <Button
+            variant="outline"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isImporting}
+            className="gap-2 border-white/15 hover:bg-white/10"
+          >
+            <Upload className="h-4 w-4" />
+            {isImporting ? 'Importing...' : 'Import CSV'}
+          </Button>
+          <Button onClick={() => setShowAddModal(true)} className="gap-2">
+            <Plus className="h-4 w-4" />
+            Add Product
+          </Button>
+        </div>
       </div>
 
       {/* Table */}

@@ -11,8 +11,10 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,9 +25,11 @@ import java.util.UUID;
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductImportService productImportService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, ProductImportService productImportService) {
         this.productService = productService;
+        this.productImportService = productImportService;
     }
 
     @Operation(summary = "List all products with optional brand/size filter")
@@ -73,5 +77,25 @@ public class ProductController {
         }
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Bulk import products from CSV (admin only)", security = @SecurityRequirement(name = "bearerAuth"))
+    @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    ResponseEntity<?> importProducts(@RequestParam("file") MultipartFile file) {
+        if (!AuthUtils.isCurrentUserAdmin()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(ErrorResponse.of("/api/products/import", "FORBIDDEN", "Admin access required"));
+        }
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest()
+                .body(ErrorResponse.of("/api/products/import", "EMPTY_FILE", "Uploaded file is empty"));
+        }
+        try {
+            CsvImportResult result = productImportService.importCsv(file);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(ErrorResponse.of("/api/products/import", "IMPORT_ERROR", e.getMessage()));
+        }
     }
 }

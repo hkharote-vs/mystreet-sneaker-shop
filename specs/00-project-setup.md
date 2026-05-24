@@ -1,6 +1,6 @@
 # SPEC-00: Project Setup & Infrastructure
 
-**Status:** `[ ] Not Started`  
+**Status:** `[x] Complete`  
 **Depends on:** Nothing  
 **Blocks:** All other specs  
 

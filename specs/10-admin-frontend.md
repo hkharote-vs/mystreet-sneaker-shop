@@ -1,6 +1,6 @@
 # SPEC-10: Admin — Product Management Frontend
 
-**Status:** `[ ] Not Started`  
+**Status:** `[x] Complete`  
 **Depends on:** SPEC-05 (frontend setup), SPEC-06 (auth — admin JWT), SPEC-03 (product backend)  
 **Blocks:** Nothing (last frontend feature)  
 

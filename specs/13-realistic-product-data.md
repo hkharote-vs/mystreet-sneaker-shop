@@ -1,6 +1,6 @@
 # SPEC-13: Realistic Product Data — CSV Import
 
-**Status:** `[ ] Not Started`  
+**Status:** `[ ] In Progress`  
 **Depends on:** SPEC-03 (product backend), SPEC-10 (admin frontend)  
 **Blocks:** Nothing — enhancement step before final demo
 

@@ -1,6 +1,6 @@
 # SPEC-07: Product Catalog — Frontend
 
-**Status:** `[ ] Not Started`  
+**Status:** `[x] Complete`  
 **Depends on:** SPEC-05 (frontend setup), SPEC-03 (product backend running)  
 **Blocks:** SPEC-08 (cart — needs product detail page to add to cart)  
 
