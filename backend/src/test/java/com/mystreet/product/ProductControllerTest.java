@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mystreet.product.dto.CreateProductRequest;
 import com.mystreet.product.dto.ProductDetailResponse;
 import com.mystreet.product.dto.ProductSummaryResponse;
+import com.mystreet.product.ProductImportService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ class ProductControllerTest {
 
     @MockitoBean
     ProductService productService;
+
+    @MockitoBean
+    ProductImportService productImportService;
 
     private ProductSummaryResponse fakeSummary(String name, String brand) {
         return new ProductSummaryResponse(UUID.randomUUID(), name, brand,
