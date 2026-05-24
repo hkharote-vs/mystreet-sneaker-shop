@@ -13,19 +13,20 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 glass-strong border-b border-white/10">
+    <header className="sticky top-0 z-50 bg-white border-b border-zinc-200">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link to="/" className="text-xl font-bold tracking-tight gradient-text">
-          MyStreeT
+        <Link to="/" className="flex items-center gap-0.5">
+          <span className="text-xl font-black tracking-tight text-zinc-950 uppercase">My</span>
+          <span className="text-xl font-black tracking-tight text-orange-500 uppercase">StreeT</span>
         </Link>
 
         <nav className="flex items-center gap-1">
           {user?.isAdmin && (
             <Link
               to="/admin/products"
-              className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-purple-300 hover:bg-white/10 hover:text-purple-200 transition-colors"
+              className="flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-600 border border-zinc-200 hover:border-zinc-400 hover:text-zinc-900 transition-all"
             >
-              <ShieldAlert className="h-4 w-4" />
+              <ShieldAlert className="h-3.5 w-3.5" />
               Admin
             </Link>
           )}
@@ -35,18 +36,19 @@ export function Header() {
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
-              className="rounded-lg p-2 text-slate-300 hover:bg-white/10 hover:text-white transition-colors"
+              className="ml-1 flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-600 border border-zinc-200 hover:border-zinc-400 hover:text-zinc-900 transition-all"
               aria-label="Logout"
             >
-              <LogOut className="h-5 w-5" />
+              <LogOut className="h-3.5 w-3.5" />
+              Logout
             </button>
           ) : (
             <Link
               to="/login"
-              className="flex items-center gap-1.5 rounded-lg bg-violet-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-violet-500 transition-colors shadow-lg shadow-violet-600/30"
+              className="ml-1 flex items-center gap-1.5 rounded-full bg-zinc-950 px-5 py-1.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-orange-500 transition-colors"
             >
-              <LogIn className="h-4 w-4" />
-              Login
+              <LogIn className="h-3.5 w-3.5" />
+              Sign In
             </Link>
           )}
         </nav>
